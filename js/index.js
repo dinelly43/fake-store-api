@@ -12,14 +12,28 @@ function getCategories(){
 } getCategories();
 
 async function getProducts(){
-    const request = await fetch('https://fakestoreapi.com/products');
-    const response = await request.json();
-    if(response.length > 0){
+    try {
+        const request = await fetch('https://fakestoreapi.com/products');
+        const response = await request.json();
+        produtos.innerHTML = '';
         response.map(produto => {
-            produtos.innerHTML += `<li>${produto.title}</li>`
+            produtos.innerHTML += 
+        `<li class="card">
+            <div class="card-imagem">
+                <img src="${produto.image}" alt="">
+                <div class="card-nota">${produto.rating.rate}</div>
+            </div>
+            <div class="card-info">
+                <h3>${produto.title}</h3>
+                <h6>${produto.category}</h6>
+                <h4>$${produto.price}</h4>
+
+            </div>
+        </li>`;
         })
         return;
+    } catch (error) {
+        alert("produtos não encontrados :/")
     }
-
-    alert("produtos não encontrados :/")
-} getProducts();
+} 
+getProducts();
